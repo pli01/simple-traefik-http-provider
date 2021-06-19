@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  traefik:
+    image: traefik:2.4
+    command:
+      --entrypoints.web.address=:80
+      --providers.http.endpoint=http://httpd/dynamic_conf.json
+    ports:
+      - "80:80"
+
+  whoami1:
+    image: containous/whoami
+  whoami2:
+    image: containous/whoami
+
+  httpd:
+    image: nginx:latest
+    volumes:
+      - ./dynamic_conf.json:/usr/share/nginx/html/dynamic_conf.json
+

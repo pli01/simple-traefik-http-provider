@@ -1,0 +1,25 @@
+"http": {
+    "routers": {
+        "whoami": {
+            "entryPoints": [
+                "web"
+            ],
+            "rule": "Host(`whoami.mydomain.local`)",
+            "service": "whoami"
+        }
+    },
+    "services": {
+        "whoami": {
+            "loadbalancer": {
+                "servers": [
+                    {
+                        "url": "http://whoami1"
+                    },
+                    {
+                        "url": "http://whoami2"
+                    }
+                ]
+            }
+        }
+    }
+}
