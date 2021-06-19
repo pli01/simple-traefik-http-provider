@@ -1,12 +1,12 @@
 # simple-traefik-http-provider
 Simple demo of routing with traefik-http-provider
 
-* traefik container with http provider: listen on http://127.0.0.1:80/
-* httpd container  hosting dynamic_conf.json : http://httpd/dynamic_conf.json
-* 2 whoami container displaying usefull information (hostname IP)  on http://whoami1 or http://whoami2
+* traefik container with http provider: listening on `http://127.0.0.1:80/`
+* httpd container hosting dynamic_conf.json : `http://httpd/dynamic_conf.json`
+* 2 whoami container displaying usefull information (hostname IP)  on `http://whoami1 or http://whoami2`
 
-[docker-compose](docker-compose.yml)
-[dynamic_conf.json](dynamic_conf.json)
+* [docker-compose file](docker-compose.yml)
+* [dynamic_conf.json file](dynamic_conf.json)
 
 # Use it
 ```
