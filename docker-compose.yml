@@ -1,5 +1,6 @@
 version: "3.8"
 services:
+  # entrypoint http://
   traefik:
     image: traefik:2.4
     command:
@@ -8,13 +9,16 @@ services:
     ports:
       - "80:80"
 
+  # dynamic config
+  httpd:
+    image: nginx:latest
+    volumes:
+      - ./dynamic_conf.json:/usr/share/nginx/html/dynamic_conf.json
+
+  # backend
   whoami1:
     image: containous/whoami
   whoami2:
     image: containous/whoami
 
-  httpd:
-    image: nginx:latest
-    volumes:
-      - ./dynamic_conf.json:/usr/share/nginx/html/dynamic_conf.json
 
