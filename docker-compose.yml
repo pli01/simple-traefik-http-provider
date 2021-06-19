@@ -3,9 +3,9 @@ services:
   # entrypoint http://
   traefik:
     image: traefik:2.4
-    command:
-      --entrypoints.web.address=:80
-      --providers.http.endpoint=http://httpd/dynamic_conf.json
+    environment:
+      TRAEFIK_ENTRYPOINTS_web_ADDRESS: :80
+      TRAEFIK_PROVIDERS_HTTP_ENDPOINT: http://httpd/dynamic_conf.json
     ports:
       - "80:80"
 
