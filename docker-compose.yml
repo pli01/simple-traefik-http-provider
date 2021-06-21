@@ -1,24 +1,39 @@
-version: "3.8"
+version: "3.5"
 services:
   # entrypoint http://
   traefik:
     image: traefik:2.4
+    networks:
+      traefik-network:
     environment:
       TRAEFIK_ENTRYPOINTS_web_ADDRESS: :80
-      TRAEFIK_PROVIDERS_HTTP_ENDPOINT: http://httpd/dynamic_conf.json
+      TRAEFIK_PROVIDERS_HTTP_ENDPOINT: http://httpd/lb-conf/dynamic_conf.json
     ports:
       - "80:80"
 
   # dynamic config
   httpd:
     image: nginx:latest
+    networks:
+      traefik-network:
     volumes:
-      - ./dynamic_conf.json:/usr/share/nginx/html/dynamic_conf.json
+      # - ./dynamic_conf.json:/usr/share/nginx/html/dynamic_conf.json
+      - ./nginx-dynamic_conf.template:/etc/nginx/templates/default.conf.template
+    environment:
+      - OS_STORAGE_URL=$OS_STORAGE_URL
+      - OS_CONTAINER=$OS_CONTAINER
+      - OS_OBJECT=$OS_OBJECT
 
-  # backend
-  whoami1:
-    image: containous/whoami
-  whoami2:
-    image: containous/whoami
+networks:
+  traefik-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
 
+#  # backend
+#  whoami1:
+#    image: containous/whoami
+#  whoami2:
+#    image: containous/whoami
+#
 
