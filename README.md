@@ -1,12 +1,26 @@
 # simple-traefik-http-provider
-Simple demo of routing with traefik-http-provider
 
+Two demos of traefik-http-provider uses
+
+1 scenario
 * traefik container with http provider: listening on `http://127.0.0.1:80/`
 * httpd container hosting dynamic_conf.json : `http://httpd/dynamic_conf.json`
 * 2 whoami container displaying usefull information (hostname IP)  on `http://whoami1 or http://whoami2`
 
 * [docker-compose file](docker-compose.yml)
 * [dynamic_conf.json file](dynamic_conf.json)
+
+2 scenario
+* traefik container with http provider: listening on `http://127.0.0.1:80/`
+* httpd container routing to swift object storage hosting dynamic_conf.json : `http://httpd/lb-conf/dynamic_conf.json`
+* httpd container use template file with environment variables defining OS_STORAGE_URL, OS_CONTAINER, OS_OBJECT
+* 2 whoami container displaying usefull information (hostname IP)  on `http://whoami1 or http://whoami2`
+
+* [docker-compose file](docker-compose.yml)
+* [nginx-dynamic_conf.template file](nginx-dynamic_conf.template)
+* [.env file](nginx-dynamic_conf.template)
+* [dynamic_conf.json file](dynamic_conf.json)
+
 
 # Use it
 ```

@@ -1,0 +1,3 @@
+OS_STORAGE_URL=https://object-store.api.cloud.org/v1/AUTH_315de89a17994b0eaf028767975c0bbb
+OS_CONTAINER=lb-conf
+OS_OBJECT=dynamic_conf.json
