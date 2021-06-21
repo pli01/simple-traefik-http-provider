@@ -8,6 +8,9 @@ services:
     environment:
       TRAEFIK_ENTRYPOINTS_web_ADDRESS: :80
       TRAEFIK_PROVIDERS_HTTP_ENDPOINT: http://httpd/lb-conf/dynamic_conf.json
+      TRAEFIK_PROVIDERS_HTTP_POLLINTERVAL: 15
+      TRAEFIK_PROVIDERS_HTTP_POLLTIMEOUT: 15
+      TRAEFIK_LOG_LEVEL: ${TRAEFIK_LOG_LEVEL:-ERROR}
     ports:
       - "80:80"
 
