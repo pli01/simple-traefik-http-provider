@@ -1,4 +1,4 @@
-# simple-traefik-http-provider
+# simple-traefik-http-provider with openstack swift
 
 Two use case of traefik-http-provider:
 
