@@ -3,7 +3,6 @@
 # quick docker deploy
 #
 # optional dockerhub login
-set -e -o pipefail
 
 export DOCKERHUB_LOGIN="${DOCKERHUB_LOGIN:-}"
 export DOCKERHUB_TOKEN="${DOCKERHUB_TOKEN:-}"
@@ -31,9 +30,9 @@ curl -kL -s $curl_args ${APP_URL} | \
   [ -n "$DOCKERHUB_TOKEN" -a -n "$DOCKERHUB_LOGIN" ] &&  echo $DOCKERHUB_TOKEN | \
       docker login --username $DOCKERHUB_LOGIN --password-stdin
 
+  make down$app_role || true
   make up$app_role
 
-  [ -n "$DOCKERHUB_TOKEN" -a -n "$DOCKERHUB_LOGIN" ] && docker logout
-)
-
-
+  if [ -n "$DOCKERHUB_TOKEN" -a -n "$DOCKERHUB_LOGIN" ] ;then docker logout ; fi
+) || exit $?
+exit 0
