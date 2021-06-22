@@ -8,12 +8,13 @@ services:
     environment:
       # https://doc.traefik.io/traefik/v2.3/reference/static-configuration/env/
       TRAEFIK_ENTRYPOINTS_web_ADDRESS: :80
-      TRAEFIK_PROVIDERS_HTTP_ENDPOINT: http://httpd/lb-conf/dynamic_conf.json
+      TRAEFIK_PROVIDERS_HTTP_ENDPOINT: http://httpd/${OS_CONTAINER}/${OS_OBJECT}
       TRAEFIK_PROVIDERS_HTTP_POLLINTERVAL: 15
       TRAEFIK_PROVIDERS_HTTP_POLLTIMEOUT: 15
       TRAEFIK_LOG_LEVEL: ${TRAEFIK_LOG_LEVEL:-ERROR}
     ports:
       - "80:80"
+      - "8082:80"
 
   # dynamic config
   httpd:
@@ -26,9 +27,9 @@ services:
       - ./nginx-dynamic_conf.template:/etc/nginx/templates/default.conf.template
     environment:
       # Openstack Swift URL
-      - OS_STORAGE_URL=$OS_STORAGE_URL
-      - OS_CONTAINER=$OS_CONTAINER
-      - OS_OBJECT=$OS_OBJECT
+      - OS_STORAGE_URL=${OS_STORAGE_URL:? OS_STORAGE_URL not defined}
+      - OS_CONTAINER=${OS_CONTAINER:? OS_CONTAINER not defined}
+      - OS_OBJECT=${OS_OBJECT:? OS_OBJECT not defined}
 
 networks:
   traefik-network:
