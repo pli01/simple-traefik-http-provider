@@ -1,0 +1,41 @@
+version: "3.5"
+networks:
+  traefik-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+
+services:
+  # entrypoint http://
+  traefik:
+    image: traefik:2.4
+    networks:
+      traefik-network:
+    environment:
+      # https://doc.traefik.io/traefik/v2.3/reference/static-configuration/env/
+      TRAEFIK_ENTRYPOINTS_web_ADDRESS: :80
+      TRAEFIK_PROVIDERS_HTTP_ENDPOINT: http://httpd/dynamic_conf.json
+      TRAEFIK_PROVIDERS_HTTP_POLLINTERVAL: 15
+      TRAEFIK_PROVIDERS_HTTP_POLLTIMEOUT: 15
+      TRAEFIK_LOG_LEVEL: ${TRAEFIK_LOG_LEVEL:-ERROR}
+    ports:
+      - "80:80"
+
+  # dynamic config
+  httpd:
+    image: nginx:latest
+    networks:
+      traefik-network:
+    volumes:
+      - ./dynamic_conf.json:/usr/share/nginx/html/dynamic_conf.json
+
+# backend
+  whoami1:
+    image: containous/whoami
+    networks:
+      traefik-network:
+
+  whoami2:
+    image: containous/whoami
+    networks:
+      traefik-network:

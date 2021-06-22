@@ -6,6 +6,7 @@ services:
     networks:
       traefik-network:
     environment:
+      # https://doc.traefik.io/traefik/v2.3/reference/static-configuration/env/
       TRAEFIK_ENTRYPOINTS_web_ADDRESS: :80
       TRAEFIK_PROVIDERS_HTTP_ENDPOINT: http://httpd/lb-conf/dynamic_conf.json
       TRAEFIK_PROVIDERS_HTTP_POLLINTERVAL: 15
@@ -21,8 +22,10 @@ services:
       traefik-network:
     volumes:
       # - ./dynamic_conf.json:/usr/share/nginx/html/dynamic_conf.json
+      # use templating nginx file (>=1.19)
       - ./nginx-dynamic_conf.template:/etc/nginx/templates/default.conf.template
     environment:
+      # Openstack Swift URL
       - OS_STORAGE_URL=$OS_STORAGE_URL
       - OS_CONTAINER=$OS_CONTAINER
       - OS_OBJECT=$OS_OBJECT
