@@ -14,7 +14,7 @@ Benefits:
 * the intermediate nginx container can act as a cache, in case of swift is unavailable
 * the intermediate nginx container store tempurl URL and is not exposed to public interface
 
-
+![Design](docs/terraform-openstack-orchestration-traefik.png)
 
 ## scenario 1 (without swift openstack)
 ```
