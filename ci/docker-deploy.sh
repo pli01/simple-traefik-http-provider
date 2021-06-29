@@ -23,7 +23,7 @@ fi
 
 # download install repo
 mkdir -p ${APP_NAME}
-curl -kL -s $curl_args ${APP_URL} | \
+eval curl -kL -s $curl_args ${APP_URL} | \
    tar -zxvf - --strip-components=1 -C ${APP_NAME}
 # install app (role)
 ( cd ${APP_NAME}
